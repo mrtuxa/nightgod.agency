@@ -22,4 +22,6 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy with scp
-        run: ls -la
+        run: ssh admin@us.sys2nix.de git clone https://github.com/mrtuxa/nightgod.agency.git /tmp/nigtgod.agency
+      - name: deploy to nginx
+        run: ssh admin@us.sys2nix.de sudo mv /tmp/nightgod.agency/ /var/www/html/nightgod.agency/
