@@ -9,21 +9,15 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2
-      with:
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        known_hosts: unnecessary
-        
-    - name: Adding Known Hosts
-      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-    
-    - name: Remove .git in htdocs on Server
-      run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm -f /home/admin/deleteme"
-    
-    - name: Print Deployment Success
-      run: echo "Deployment successful!" `
+      - name: Create SSH key
+        run: |
+           install -m 600 -D /dev/null ~/.ssh/id_rsa
+           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+           host='us.sys2nix.de'
+           hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+           ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KNOWN_HOSTS: ${{secrets.SSH_KNOWN_HOSTS}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
