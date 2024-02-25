@@ -22,12 +22,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
       - name: deployment
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            git clone https://github.com/mrtuxa/nightgod.agency.git /tmp/nightgod.agency
-            sudo mv /tmp/nightgod.agency /var/www/html/nightgod.agency
+        run: scp -rv /home/runner/work/nightgod.agency/nightgod.agency ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/tmp/nightgod.agency
