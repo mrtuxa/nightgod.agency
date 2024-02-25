@@ -11,7 +11,6 @@ jobs:
     steps:
       - name: Create SSH key
         run: |
-           ping -c 4 us.sys2nix.de
            install -m 600 -D /dev/null ~/.ssh/id_rsa
            echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
            host='us.sys2nix.de'
