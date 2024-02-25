@@ -21,5 +21,5 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy with rsync
-        run: scp -rv . admin@us.sys2nix.de:/home/admin/test
+      - name: Deploy with scp
+        run: ls -la
