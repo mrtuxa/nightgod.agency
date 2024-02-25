@@ -16,6 +16,10 @@ jobs:
            host='us.sys2nix.de'
            hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
            ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
+           ssh admin@us.sys2nix.de sudo rm -rf /var/www/html/nightgod.agency
+           ssh admin@us.sys2nix.de sudo git clone https://github.com/mrtuxa/nightgod.agency.git /tmp/nightgod.agency
+           ssh admin@us.sys2nix.de sudo mv /tmp/nightgod.agency /var/www/html/nightgod.agency
+           ssh admin@us.sys2nix.de sudo rm -rf /tmp/nightgod.agency
         shell: bash
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
