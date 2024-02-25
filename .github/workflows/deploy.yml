@@ -23,7 +23,7 @@ jobs:
     
     - name: Remove .git in htdocs on Server
       run: |
-        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "lscpu"
+        ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "rm -f /home/admin/deleteme"
     
     - name: Print Deployment Success
       run: echo "Deployment successful!" `
