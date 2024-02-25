@@ -21,7 +21,13 @@ jobs:
       - name: Adding Known Hosts
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy with scp
-        run: ssh admin@us.sys2nix.de git clone https://github.com/mrtuxa/nightgod.agency.git /tmp/nigtgod.agency
-      - name: deploy to nginx
-        run: ssh admin@us.sys2nix.de sudo mv /tmp/nightgod.agency/ /var/www/html/nightgod.agency/
+      - name: deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            git clone https://github.com/mrtuxa/nightgod.agency.git /tmp/nightgod.agency
+            sudo mv /tmp/nightgod.agency /var/www/html/nightgod.agency
