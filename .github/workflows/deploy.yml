@@ -22,4 +22,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy with rsync
-        run: scp -rv ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/admin/test
+        run: scp -rv . admin@us.sys2nix.de:/home/admin/test
