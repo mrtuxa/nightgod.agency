@@ -1,6 +1,7 @@
 # See https://zellwk.com/blog/github-actions-deploy/ an explanation of this code
 name: deploy
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
